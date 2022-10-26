@@ -197,4 +197,59 @@ function getRecipeByName($name)
     $statement->closeCursor();    
     return $result;
 }
+
+#user functions
+function getAllUsers()
+{
+    global $db; 
+    $query = "SELECT * FROM Web_User";
+    $statement = $db->prepare($query);
+    $statement->execute();
+    $result = $statement->fetchAll();   // fetch()
+    $statement->closeCursor();
+    return $result;
+}
+function getUserByID($User_ID)
+{
+    global $db;
+    $query = "SELECT * FROM Web_User WHERE User_ID = :User_ID";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':User_ID', $User_ID);
+    $statement->execute();
+    $result = $statement->fetch();   // fetch()
+    $statement->closeCursor();
+    return $result;
+}
+function updateUser($User_ID, $Name, $Email)
+{
+    // get instance of PDO
+    // prepare statement
+    //  1) prepare 
+    //  2) bindValue, execute
+    global $db;
+    $query = "UPDATE Web_User SET Name=:Name, Email=:Email WHERE User_ID=:User_ID";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':User_ID', $User_ID);
+    $statement->bindValue(':Name', $Name);
+    $statement->bindValue(':Email', $Email);
+    $statement->execute();
+    $statement->closeCursor();
+
+    // $statement->query()
+    
+
+}
+
+
+function deleteUser($User_ID)
+{
+
+    global $db;
+    $query = "DELETE FROM Web_User WHERE User_ID=:User_ID";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':User_ID', $User_ID);
+    $statement->execute();
+    $statement->closeCursor();
+    
+}
 ?>
