@@ -172,4 +172,29 @@ function addWebUser($User_ID, $name, $email){
         echo $e->getMessage();
     }
 }
+
+#this is for our main page to show all the names and photos
+function getRecipeNameandPhoto()
+{
+    global $db; 
+    $query = "SELECT name, photo FROM Recipe";
+    $statement = $db->prepare($query);
+    $statement->execute();
+    $result = $statement->fetchAll();   // fetch()
+    $statement->closeCursor();
+    return $result;
+}
+
+#search function
+function getRecipeByName($name)  
+{
+    global $db;
+    $query = "SELECT * FROM Recipe where name = :name";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':name', $name);
+    $statement->execute();
+    $result = $statement->fetch(); 
+    $statement->closeCursor();    
+    return $result;
+}
 ?>
